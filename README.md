@@ -7,3 +7,6 @@ The FPGA's top-level can be modified for any FPGA board (I have tried Tang Nano,
 
 
 I have measured the latency on 2 of my PCs and my RPi4. I have not seen a latency greater than 1/3 of a millisecond, and some latencies were as low as 180us.
+
+
+A practical application of this would be if the FPGA is connected to an I2S microphone and a VAD (Voice Activity Detection) algorithm is running on the FPGA. If no audio data is to be lost, how large of a buffer is needed to hold voice audio samples? If the mono microphone is saving 24bit (3 byte) samples at 16kHz, 3 bytes need to be saved every 62.5us. If the round trip latency is 330us, 6 samples (18 bytes) of memory would be needed. Most FPGA algorithms will just stream results to the host PC, but there are times when the round trip latency is needed for design decisions.
