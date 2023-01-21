@@ -3,10 +3,10 @@ This FPGA design measures the "round trip" latency from when the FPGA sends a UA
 
 If the USB UART interface is used to load/retrieve data processed by the FPGA, I was curious as to how quickly the FPGA could alert the host PC and then for the host to send a response to the FPGA. The FPGA has an internal counter (in 10us steps) which starts counting when one of the FPGA board buttons is pressed. The button press also immediately causes the FPGA to send a single byte to the host PC. The PC is running a Python script which receives the UART byte and immedately sends a response byte to the FPGA. Upon receiving the response byte the FPGA samples the internal counter and sends the count back to the host PC. The Python script reports the received counter value (after multiplying it by 10us). The Python script can be easily modified to allow for multiple button presses, for an average latency to be calcuated.
 
-The FPGA's top-level can be modified for any FPGA board (I have tried Tang Nano, Tang Nano 9k and CMOD-A7). Maximum UART baudrate for Tang Nano is 1Mbit/s, Tang Nano 9k is 3Mbit/s and CMOD-A7 is 12Mbit/s.
+The FPGA's top-level can be modified for any FPGA board (I have tried Tang Nano 9k and CMOD-A7). Maximum UART baudrate for Tang Nano is 1Mbit/s, Tang Nano 9k is 3Mbit/s and CMOD-A7 is 12Mbit/s.
 
 
-I have measured the latency on 2 of my PCs and my RPi4. I generally do not see a latency greater than 1/3 of a millisecond, and some latencies were as low as 180us. I measured the latency manually with a logic analyzer to ensure that the FPGA internal counter was providing accurate results.
+I have measured the latency on 2 of my PCs and my RPi4. Tnag Nano 9k generally does not see a latency greater than 1/3 of a millisecond, and some latencies were as low as 180us. I measured the latency manually with a logic analyzer to ensure that the FPGA internal counter was providing accurate results. CMOD-A7 had much, much higher latency with the offical FTDI FT2232H IC (ironic that the software emulated version is higher performance). I see at least 2 milliseconds of latency, and most times I will reach the maximum 2.55ms count.
 
 ![picture](https://github.com/charkster/button_press_uart/blob/main/images/button_press_uart_latency_rpi4.png)
 
